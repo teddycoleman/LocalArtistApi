@@ -12,6 +12,8 @@ describe "Testing the showing api", type: :request do
 	it "GET /profiles/:profile_id/showings" do
 		get "/profiles/#{@gallery.id}/showings"
 
+    parsed_body = JSON.parse(response.body)
+    expect(parsed_body[0]["description"]).to eq("new showing")
 		expect(response).to have_http_status(200)
 	end
 	it "POST /profiles/:profile_id/showings" do
@@ -27,6 +29,8 @@ describe "Testing the showing api", type: :request do
 			"Authorization": "Token token=#{@pablo.auth_token}"
 		}
 
+    parsed_body = JSON.parse(response.body)
+    expect(parsed_body["description"]).to eq("new showing")
 		expect(response).to have_http_status(201)
 	end
 	it "DELETE /showings/:id" do
