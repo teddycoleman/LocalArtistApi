@@ -1,4 +1,6 @@
 class PhotosController < ApplicationController
+	before_action :authenticate, except: [:index, :show]
+
 	def index 
 		render :json => Profile.find(params[:profile_id]).photos, status: 200
 	end

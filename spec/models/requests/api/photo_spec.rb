@@ -3,6 +3,7 @@ require "rails_helper"
 describe "Testing the photo api", type: :request do 
 	before(:each) do
 		@profile = Profile.create(name: "Farleys", style: "Coffeeshop", profile_type: "gallery",description: "great coffeshop")
+		@user = User.create(first_name:"Pablo", last_name:"Picasso", email: "pp@gmail.com", password:"swordfish")	
 	end
 	it "GET /profiles/:id/photos returns a status code of 200" do
 		get "/profiles/#{@profile.id}/photos"
@@ -17,6 +18,9 @@ describe "Testing the photo api", type: :request do
 				description: "Awesome painting",
 				order: 1
 			}
+		},
+		headers: {
+			"Authorization": "Token token=#{@user.auth_token}"
 		}
 
 		expect(response).to have_http_status(201)
@@ -35,6 +39,9 @@ describe "Testing the photo api", type: :request do
 			photo: {
 				description: "REALLY awesome painting"
 			}
+		},
+		headers: {
+			"Authorization": "Token token=#{@user.auth_token}"
 		}
 
 		expect(response).to have_http_status(200)
@@ -42,7 +49,10 @@ describe "Testing the photo api", type: :request do
 
   it "delete /profiles/:profile_id/photos/:id should return a 200 status code" do
   	photo = @profile.photos.create(price: 200, description: "Awesome painting", order:1)
-    delete "/profiles/#{@profile.id}/photos/#{photo.id}"
+    delete "/profiles/#{@profile.id}/photos/#{photo.id}",
+		headers: {
+			"Authorization": "Token token=#{@user.auth_token}"
+		}
 
     expect(response).to have_http_status(200)
   end
