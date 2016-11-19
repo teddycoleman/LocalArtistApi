@@ -6,6 +6,7 @@ describe "Testing the showing api", type: :request do
 		@artist = Profile.create(name: "Pablo Picasso", style: "Cubism", profile_type: "artist",description: "great artist")		
 		@photo = @artist.photos.create(price: 200, description: "Awesome painting", order:1)
 		@showing = Showing.create(artist_id: @artist.id, gallery_id: @gallery.id, photo_id: @photo.id, description:"new showing")
+		@user = User.create(first_name:"Pablo", last_name:"Picasso", email: "pp@gmail.com", password:"swordfish")	
 	end
 	it "GET /profiles/:profile_id/showings" do
 		get "/profiles/#{@gallery.id}/showings"
@@ -20,12 +21,18 @@ describe "Testing the showing api", type: :request do
 				photo_id: @photo.id,
 				description: "new showing"
 			}
+		},
+		headers: {
+			"Authorization": "Token token=#{@user.auth_token}"
 		}
 
 		expect(response).to have_http_status(201)
 	end
 	it "DELETE /showings/:id" do
-		delete "/showings/#{@showing.id}" 
+		delete "/showings/#{@showing.id}",
+		headers: {
+			"Authorization": "Token token=#{@user.auth_token}"
+		}
 
 		expect(response).to have_http_status(200)
 	end

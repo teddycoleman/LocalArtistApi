@@ -1,4 +1,6 @@
 class ShowingsController < ApplicationController
+	before_action :authenticate, except: [:index]
+
 	def index
 		@profile = Profile.find(params[:profile_id])
 		render :json => @profile.get_showings, status: 200
