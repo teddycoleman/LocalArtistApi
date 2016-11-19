@@ -3,11 +3,14 @@ require "rails_helper"
 describe "Testing the profile api", type: :request do 
 	before(:each) do
 		@user = User.create(first_name:"Pablo", last_name:"Picasso", email: "pp@gmail.com", password:"swordfish")
-	end
+	  @profile = Profile.create(user_id: @user.id, name: "Farleys", style: "Coffeeshop", profile_type: "gallery",description: "great coffeshop")
+  end
 
   it "GET /profiles should return a 200 status code" do
     get "/profiles"
 
+    parsed_body = JSON.parse(response.body)
+    expect(parsed_body[0]["description"]).to eq("great coffeshop")
     expect(response).to have_http_status(200)
   end
 
@@ -25,6 +28,8 @@ describe "Testing the profile api", type: :request do
 			"Authorization": "Token token=#{@user.auth_token}"
 		}
 
+    parsed_body = JSON.parse(response.body)
+    expect(parsed_body["description"]).to eq("great coffeshop")
     expect(response).to have_http_status(201)
   end
 
@@ -43,9 +48,10 @@ describe "Testing the profile api", type: :request do
   end
 
   it "GET /profiles/:id should return a 200 status code" do
-  	profile = Profile.create(name: "Farleys", style: "Coffeeshop", profile_type: "gallery",description: "great coffeshop")
-    get "/profiles/#{profile.id}"
+  	get "/profiles/#{@profile.id}"
 
+    parsed_body = JSON.parse(response.body)
+    expect(parsed_body["description"]).to eq("great coffeshop")
     expect(response).to have_http_status(200)
   end
 
@@ -60,6 +66,8 @@ describe "Testing the profile api", type: :request do
 			"Authorization": "Token token=#{@user.auth_token}"
 		}
 
+    parsed_body = JSON.parse(response.body)
+    expect(parsed_body["description"]).to eq("REALLY great coffeshop")
     expect(response).to have_http_status(200)
   end
 
