@@ -3,7 +3,7 @@ class CreateProfiles < ActiveRecord::Migration[5.0]
     create_table :profiles do |t|
       t.string :name
       t.string :style
-      t.string :type
+      t.string :profile_type
       t.string :description
 
       t.timestamps

@@ -32,10 +32,10 @@ ActiveRecord::Schema.define(version: 20161118184743) do
   create_table "profiles", force: :cascade do |t|
     t.string   "name"
     t.string   "style"
-    t.string   "type"
+    t.string   "profile_type"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "showings", force: :cascade do |t|
