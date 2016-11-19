@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20161119162707) do
 
   create_table "photos", force: :cascade do |t|
     t.integer  "profile_id"
+    t.string   "title"
     t.integer  "price"
     t.string   "description"
     t.integer  "order"

@@ -1,4 +1,6 @@
 class ProfilesController < ApplicationController
+	before_action :authenticate, except: [:index, :show]
+
 	def index
 		render :json => Profile.all, status: 200
 	end
