@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  devise_for :users
 	resources :profiles, except: [:edit, :new] do
 		resources :photos, except: [:edit, :new]
 	end
