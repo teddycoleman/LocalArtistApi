@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe "Testing the showing api", type: :request do 
+
 	before(:each) do
 		@pablo = User.create(first_name:"Pablo", last_name:"Picasso", email: "pp@gmail.com", password:"swordfish")	
 		@owner = User.create(first_name:"Matt", last_name:"Foley", email: "mfoley@gmail.com", password:"swordfish")	
@@ -9,6 +10,7 @@ describe "Testing the showing api", type: :request do
 		@photo = @artist.photos.create(price: 200, description: "Awesome painting", order:1)
 		@showing = Showing.create(artist_id: @artist.id, gallery_id: @gallery.id, photo_id: @photo.id, description:"new showing")
 	end
+
 	it "GET /profiles/:profile_id/showings" do
 		get "/profiles/#{@gallery.id}/showings"
 
@@ -16,6 +18,7 @@ describe "Testing the showing api", type: :request do
     expect(parsed_body[0]["description"]).to eq("new showing")
 		expect(response).to have_http_status(200)
 	end
+
 	it "POST /profiles/:profile_id/showings" do
 		post "/profiles/#{@gallery.id}/showings", params: {
 			showing: {
@@ -33,6 +36,7 @@ describe "Testing the showing api", type: :request do
     expect(parsed_body["description"]).to eq("new showing")
 		expect(response).to have_http_status(201)
 	end
+
 	it "DELETE /showings/:id" do
 		delete "/showings/#{@showing.id}",
 		headers: {
@@ -41,4 +45,5 @@ describe "Testing the showing api", type: :request do
 
 		expect(response).to have_http_status(200)
 	end
+	
 end

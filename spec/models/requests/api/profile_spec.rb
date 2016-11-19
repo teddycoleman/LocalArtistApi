@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe "Testing the profile api", type: :request do 
+
 	before(:each) do
 		@user = User.create(first_name:"Pablo", last_name:"Picasso", email: "pp@gmail.com", password:"swordfish")
 	  @profile = Profile.create(user_id: @user.id, name: "Farleys", style: "Coffeeshop", profile_type: "gallery",description: "great coffeshop")
@@ -80,5 +81,5 @@ describe "Testing the profile api", type: :request do
 
     expect(response).to have_http_status(200)
   end
-
+  
 end

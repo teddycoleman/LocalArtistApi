@@ -1,11 +1,13 @@
 require "rails_helper"
 
 describe "Testing the photo api", type: :request do 
+
 	before(:each) do
 		@user = User.create(first_name:"Pablo", last_name:"Picasso", email: "pp@gmail.com", password:"swordfish")	
 		@profile = Profile.create(user_id: @user.id, name: "Farleys", style: "Coffeeshop", profile_type: "gallery",description: "great coffeshop")	
 		@photo = @profile.photos.create(price: 200, description: "Awesome painting", order:1)
 	end
+
 	it "GET /profiles/:id/photos returns a status code of 200" do
 		get "/profiles/#{@profile.id}/photos"
 
@@ -13,6 +15,7 @@ describe "Testing the photo api", type: :request do
 		expect(parsed_body[0]["description"]).to eq("Awesome painting")
 		expect(response).to have_http_status(200)
 	end
+
 	it "POST /profiles/:profile_id/photos returns a status code of 201" do
 		post "/profiles/#{@profile.id}/photos",params: {
 			photo: {
@@ -63,4 +66,5 @@ describe "Testing the photo api", type: :request do
 
     expect(response).to have_http_status(200)
   end
+  
 end
