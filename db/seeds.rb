@@ -10,3 +10,4 @@ gallery = Profile.create(name: "Farleys", style: "Coffeeshop", profile_type: "ga
 artist = Profile.create(name: "Pablo Picasso", style: "Cubism", profile_type: "artists",description: "amazing artist")
 photo = artist.photos.create(title: "superb painting", price: 200, description: "Awesome painting", order:1)
 Showing.create(artist_id: artist.id, gallery_id: gallery.id, photo_id: photo.id, description:"new showing")
+User.create(first_name:"Pablo",last_name:"Picasso",email:"pp@gmail.com",password:"swordfish")

@@ -1,6 +1,10 @@
 require "rails_helper"
 
 describe "Testing the profile api", type: :request do 
+	before(:each) do
+		@user = User.create(first_name:"Pablo", last_name:"Picasso", email: "pp@gmail.com", password:"swordfish")
+	end
+
   it "GET /profiles should return a 200 status code" do
     get "/profiles"
 
@@ -15,7 +19,10 @@ describe "Testing the profile api", type: :request do
     		profile_type: "gallery",
     		description: "great coffeshop"
     	}
-    }
+    },
+		headers: {
+			"Authorization": "Token token=#{@user.auth_token}"
+		}
 
     expect(response).to have_http_status(201)
   end
@@ -26,7 +33,10 @@ describe "Testing the profile api", type: :request do
     		name: "Farleys",
     		description: "great coffeshop"
     	}
-    }
+    },
+		headers: {
+			"Authorization": "Token token=#{@user.auth_token}"
+		}
 
     expect(response).to have_http_status(400)
   end
@@ -44,14 +54,20 @@ describe "Testing the profile api", type: :request do
     	profile: {
     		description: "REALLY great coffeshop"
     	}
-    }
+    },
+		headers: {
+			"Authorization": "Token token=#{@user.auth_token}"
+		}
 
     expect(response).to have_http_status(200)
   end
 
   it "delete /profiles/:id should return a 200 status code" do
   	profile = Profile.create(name: "Farleys", style: "Coffeeshop", profile_type: "gallery",description: "great coffeshop")
-    delete "/profiles/#{profile.id}"
+    delete "/profiles/#{profile.id}",
+		headers: {
+			"Authorization": "Token token=#{@user.auth_token}"
+		}
 
     expect(response).to have_http_status(200)
   end
