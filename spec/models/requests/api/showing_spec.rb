@@ -2,11 +2,12 @@ require "rails_helper"
 
 describe "Testing the showing api", type: :request do 
 	before(:each) do
-		@gallery = Profile.create(name: "Farleys", style: "Coffeeshop", profile_type: "gallery",description: "great coffeshop")
-		@artist = Profile.create(name: "Pablo Picasso", style: "Cubism", profile_type: "artist",description: "great artist")		
+		@pablo = User.create(first_name:"Pablo", last_name:"Picasso", email: "pp@gmail.com", password:"swordfish")	
+		@owner = User.create(first_name:"Matt", last_name:"Foley", email: "mfoley@gmail.com", password:"swordfish")	
+		@gallery = Profile.create(user_id: @owner.id, name: "Farleys", style: "Coffeeshop", profile_type: "gallery",description: "great coffeshop")
+		@artist = Profile.create(user_id: @pablo.id, name: "Pablo Picasso", style: "Cubism", profile_type: "artist",description: "great artist")		
 		@photo = @artist.photos.create(price: 200, description: "Awesome painting", order:1)
 		@showing = Showing.create(artist_id: @artist.id, gallery_id: @gallery.id, photo_id: @photo.id, description:"new showing")
-		@user = User.create(first_name:"Pablo", last_name:"Picasso", email: "pp@gmail.com", password:"swordfish")	
 	end
 	it "GET /profiles/:profile_id/showings" do
 		get "/profiles/#{@gallery.id}/showings"
@@ -23,7 +24,7 @@ describe "Testing the showing api", type: :request do
 			}
 		},
 		headers: {
-			"Authorization": "Token token=#{@user.auth_token}"
+			"Authorization": "Token token=#{@pablo.auth_token}"
 		}
 
 		expect(response).to have_http_status(201)
@@ -31,7 +32,7 @@ describe "Testing the showing api", type: :request do
 	it "DELETE /showings/:id" do
 		delete "/showings/#{@showing.id}",
 		headers: {
-			"Authorization": "Token token=#{@user.auth_token}"
+			"Authorization": "Token token=#{@pablo.auth_token}"
 		}
 
 		expect(response).to have_http_status(200)

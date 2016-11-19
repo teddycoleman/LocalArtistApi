@@ -14,6 +14,7 @@ describe "Testing the profile api", type: :request do
   it "POST /profiles should return a 201 status code" do
     post "/profiles", params:{
     	profile: {
+        user_id: @user.id,
     		name: "Farleys",
     		style: "Coffeeshop",
     		profile_type: "gallery",
