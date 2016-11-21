@@ -18,5 +18,9 @@ module LocalArtist
         resource '*', :headers => :any, :methods => [:get, :post, :options]
       end
     end
+
+    config.to_prepare do
+      DeviseController.respond_to :html, :json
+    end
   end
 end
