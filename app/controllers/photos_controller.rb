@@ -1,12 +1,12 @@
 class PhotosController < ApplicationController
-	before_action :authenticate, except: [:index, :show]
+	# before_action :authenticate, except: [:index, :show]
 
-	def index 
+	def index
 		render :json => Profile.find(params[:profile_id]).photos, status: 200
 	end
 
 	def create
-		photo = Profile.find(params[:profile_id]).photos.new(photo_params)
+		photo = Profile.find(params[:profile_id]).photos.new(photo: params[:photo])
 
 		if photo.valid?
 			photo.save
