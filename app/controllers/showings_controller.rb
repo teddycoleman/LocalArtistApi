@@ -3,7 +3,17 @@ class ShowingsController < ApplicationController
 
 	def index
 		@profile = Profile.find(params[:profile_id])
-		render :json => @profile.get_showings, status: 200
+		showings_info = {}
+		@showings = @profile.get_showings
+		@showings.each do |showing|
+			showings_info[showing.id] = {
+				:showing => showing, 
+				:artist => showing.artist,
+				:gallery => showing.gallery,
+				:photo => [showing.photo, showing.photo.photo_url] 
+			}
+		end
+		render :json => showings_info, status: 200
 	end
 
 	def create

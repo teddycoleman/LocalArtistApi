@@ -2,7 +2,8 @@ class PhotosController < ApplicationController
 	# before_action :authenticate, except: [:index, :show]
 
 	def index
-		render :json => Profile.find(params[:profile_id]).photos, status: 200
+		@photos = Profile.find(params[:profile_id]).photos
+		render :json => @photos.map {|photo| [photo.attributes, photo.photo_url]}, status: 200
 	end
 
 	def create
@@ -17,7 +18,8 @@ class PhotosController < ApplicationController
 	end
 
 	def show
-		render :json => Photo.find(params[:id]), status: 200
+		@photo = Photo.find(params[:id])
+		render :json => @photo.to_json(:only => [:profile_id,:price,:description,:order], :methods => [:photo_url]), status: 200
 	end
 
 	def update
