@@ -6,6 +6,11 @@ class PhotosController < ApplicationController
 		render :json => @photos.map {|photo| [photo.attributes, photo.photo_url]}, status: 200
 	end
 
+	def all_photos
+		@photos = Photo.all
+		render :json =>  @photos.map {|photo| [photo.attributes, photo.photo_url]}, status: 200
+	end
+
 	def create
 		photo = Profile.find(params[:profile_id]).photos.new(photo: params[:photo])
 
