@@ -18,7 +18,8 @@ class ProfilesController < ApplicationController
 
 	def show
 		profile = Profile.find(params[:id])
-		render :json => profile, status: 200
+		profile_array = [profile, profile.profile_pic.url]
+		render :json => profile_array, status: 200
 	end
 
 	def update
@@ -39,6 +40,6 @@ class ProfilesController < ApplicationController
 
 	private
 	def profile_params
-		params.require(:profile).permit(:name, :style, :profile_type, :description)
+		params.require(:profile).permit(:name, :style, :profile_type, :description, :profile_pic)
 	end
 end
