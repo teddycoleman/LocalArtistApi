@@ -1,5 +1,5 @@
 class ShowingsController < ApplicationController
-	before_action :authenticate, except: [:index]
+	before_action :authenticate, except: [:index, :all_showings]
 
 	def index
 		@profile = Profile.find(params[:profile_id])
