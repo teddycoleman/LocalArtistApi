@@ -16,6 +16,11 @@ class ShowingsController < ApplicationController
 		render :json => showings_info, status: 200
 	end
 
+	def all_showings
+		@showings = Showing.all
+		render :json => @showings, status: 200
+	end
+		
 	def create
 		showing = Showing.new(showings_params)
 		if showing.valid?
