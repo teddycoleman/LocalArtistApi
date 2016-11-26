@@ -16,7 +16,7 @@ class PhotosController < ApplicationController
 
 		if photo.valid?
 			photo.save
-			render :json => photo, status: 201
+			render :json => [photo, photo.photo_url], status: 201
 		else
 			head 400
 		end
