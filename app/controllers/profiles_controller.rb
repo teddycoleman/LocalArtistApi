@@ -2,7 +2,8 @@ class ProfilesController < ApplicationController
 	before_action :authenticate, except: [:index, :show]
 
 	def index
-		render :json => Profile.all, status: 200
+		@profiles = Profile.all
+		render :json => @profiles.map {|profile| [profile, profile.profile_pic.url]}, status: 200
 	end
 
 	def create

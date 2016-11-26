@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 	
 	get "/profiles/:profile_id/showings", to: "showings#index"
 	get "/showings", to: "showings#all_showings"
+	get "/showings/:id", to: "showings#show"
 	post "/profiles/:profile_id/showings", to: "showings#create"
 	delete "/showings/:id", to: "showings#destroy"
 

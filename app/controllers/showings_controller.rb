@@ -1,5 +1,5 @@
 class ShowingsController < ApplicationController
-	before_action :authenticate, except: [:index, :all_showings]
+	before_action :authenticate, except: [:index, :all_showings, :show]
 
 	def index
 		@profile = Profile.find(params[:profile_id])
@@ -10,7 +10,8 @@ class ShowingsController < ApplicationController
 				:showing => showing, 
 				:artist => showing.artist,
 				:gallery => showing.gallery,
-				:photo => [showing.photo, showing.photo.photo_url] 
+				:photo => [showing.photo, showing.photo.photo_url],
+				:profile_pic => showing.artist.profile_pic.url 
 			}
 		end
 		render :json => showings_info, status: 200
@@ -18,7 +19,30 @@ class ShowingsController < ApplicationController
 
 	def all_showings
 		@showings = Showing.all
-		render :json => @showings, status: 200
+		showings_info = {}
+		@showings.each do |showing|
+			showings_info[showing.id] = {
+				:showing => showing, 
+				:artist => showing.artist,
+				:gallery => showing.gallery,
+				:photo => [showing.photo, showing.photo.photo_url],
+				:profile_pic => showing.artist.profile_pic.url 
+			}
+		end
+		render :json => showings_info, status: 200
+	end
+
+	def show
+		showing = Showing.find(params[:id])
+		showing_info = {
+			:showing => showing, 
+			:artist => showing.artist,
+			:gallery => showing.gallery,
+			:photo => [showing.photo, showing.photo.photo_url],
+			:artist_pic => showing.artist.profile_pic.url,
+			:gallery_pic => showing.gallery.profile_pic.url
+		}
+		render :json => showing_info, status: 200
 	end
 		
 	def create
