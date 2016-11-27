@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-	before_action :authenticate, except: [:index, :show]
+	before_action :authenticate, except: [:index, :show, :all_photos]
 
 	def index
 		@photos = Profile.find(params[:profile_id]).photos
