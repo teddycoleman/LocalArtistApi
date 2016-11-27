@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-	# before_action :authenticate, except: [:index, :show]
+	before_action :authenticate, except: [:index, :show]
 
 	def index
 		@photos = Profile.find(params[:profile_id]).photos
@@ -24,7 +24,15 @@ class PhotosController < ApplicationController
 
 	def show
 		@photo = Photo.find(params[:id])
-		render :json => @photo.to_json(:only => [:profile_id,:price,:description,:order], :methods => [:photo_url]), status: 200
+		render :json => @photo.to_json(:only => [:profile_id,:price,:description,:order,:showing_id], :methods => [:photo_url]), status: 200
+	end
+
+	def edit
+		p params
+		p photo_params
+		@photo = Photo.find(params[:id])
+		@photo.update_attributes(photo_params)
+		render :json => @photo.to_json(:only => [:profile_id,:price,:description,:order,:showing_id], :methods => [:photo_url]), status: 200
 	end
 
 	def update
@@ -45,7 +53,7 @@ class PhotosController < ApplicationController
 	private
 
 	def photo_params
-		params.require(:photo).permit(:profile_id,:price,:description,:order,:photo)
+		params.require(:photo).permit(:profile_id,:price,:description,:order,:photo,:showing_id)
 	end
 
 end
