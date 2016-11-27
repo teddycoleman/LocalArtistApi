@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123192617) do
+ActiveRecord::Schema.define(version: 20161126194714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,9 @@ ActiveRecord::Schema.define(version: 20161123192617) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.integer  "showing_id"
     t.index ["profile_id"], name: "index_photos_on_profile_id", using: :btree
+    t.index ["showing_id"], name: "index_photos_on_showing_id", using: :btree
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -48,13 +50,11 @@ ActiveRecord::Schema.define(version: 20161123192617) do
   create_table "showings", force: :cascade do |t|
     t.integer  "artist_id"
     t.integer  "gallery_id"
-    t.integer  "photo_id"
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["artist_id"], name: "index_showings_on_artist_id", using: :btree
     t.index ["gallery_id"], name: "index_showings_on_gallery_id", using: :btree
-    t.index ["photo_id"], name: "index_showings_on_photo_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -78,6 +78,6 @@ ActiveRecord::Schema.define(version: 20161123192617) do
   end
 
   add_foreign_key "photos", "profiles"
+  add_foreign_key "photos", "showings"
   add_foreign_key "profiles", "users"
-  add_foreign_key "showings", "photos"
 end

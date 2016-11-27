@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 	end
 
 	get "/photos", to: "photos#all_photos"
+	put "/photos/:id", to: "photos#edit"
 	
 	get "/profiles/:profile_id/showings", to: "showings#index"
 	get "/showings", to: "showings#all_showings"

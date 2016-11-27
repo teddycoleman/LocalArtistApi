@@ -10,7 +10,7 @@ class ShowingsController < ApplicationController
 				:showing => showing, 
 				:artist => showing.artist,
 				:gallery => showing.gallery,
-				:photo => [showing.photo, showing.photo.photo_url],
+				:photo => [showing.photos[0], showing.photos[0].photo_url],
 				:profile_pic => showing.artist.profile_pic.url 
 			}
 		end
@@ -25,7 +25,7 @@ class ShowingsController < ApplicationController
 				:showing => showing, 
 				:artist => showing.artist,
 				:gallery => showing.gallery,
-				:photo => [showing.photo, showing.photo.photo_url],
+				:photo => [showing.photos[0], showing.photos[0].photo_url],
 				:profile_pic => showing.artist.profile_pic.url 
 			}
 		end
@@ -38,7 +38,7 @@ class ShowingsController < ApplicationController
 			:showing => showing, 
 			:artist => showing.artist,
 			:gallery => showing.gallery,
-			:photo => [showing.photo, showing.photo.photo_url],
+			:photos => showing.photos.map {|photo| [photo, photo.photo_url] },
 			:artist_pic => showing.artist.profile_pic.url,
 			:gallery_pic => showing.gallery.profile_pic.url
 		}
@@ -63,6 +63,6 @@ class ShowingsController < ApplicationController
 
 	private
 	def showings_params
-		params.require(:showing).permit(:artist_id, :gallery_id, :photo_id, :description)
+		params.require(:showing).permit(:artist_id, :gallery_id, :photo_id, :description, :photo_id)
 	end
 end
