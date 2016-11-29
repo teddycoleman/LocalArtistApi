@@ -13,6 +13,8 @@ class ProfilesController < ApplicationController
 			profile.save
 			render :json => profile, status: 201
 		else
+			p "ERROR"
+			p profile.errors
 			head 400
 		end
 	end
