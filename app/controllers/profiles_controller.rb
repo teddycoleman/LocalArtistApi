@@ -11,6 +11,8 @@ class ProfilesController < ApplicationController
 
 		if profile.valid?
 			profile.save
+			p "ERROR"
+			p profile.errors
 			render :json => profile, status: 201
 		else
 			p "ERROR"
