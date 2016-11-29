@@ -1,4 +1,4 @@
-# README
+# Local Artist Api
 
 This is the API for the app here: https://github.com/teddycoleman/LocalArtistApp.  Check out the app for more detail, or here for documentation of the endpoints: https://github.com/teddycoleman/LocalArtistApi/blob/master/documentation/endpoints.md.
 
