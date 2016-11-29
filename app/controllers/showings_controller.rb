@@ -63,6 +63,6 @@ class ShowingsController < ApplicationController
 
 	private
 	def showings_params
-		params.require(:showing).permit(:artist_id, :gallery_id, :photo_id, :description, :photo_id)
+		params.require(:showing).permit(:artist_id, :gallery_id, :description, :photo_id)
 	end
 end
