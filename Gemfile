@@ -33,6 +33,11 @@ gem 'devise'
 
 gem 'rack-cors', :require => 'rack/cors'
 
+gem "figaro"
+
+gem 'aws-sdk', '~> 2.3'
+
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
